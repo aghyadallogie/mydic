@@ -2,7 +2,6 @@ const { UserModel } = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 
 exports.registerController = async (req, res) => {
-  console.log("hi");
   try {
     // validate new user data
     const existingUser = await UserModel.findOne({ email: req.body.email });
@@ -33,7 +32,6 @@ exports.loginController = async (req, res) => {
   try {
     // check if the user exists
     const registeredUser = await UserModel.findOne({ email: req.body.email });
-    console.log(registeredUser);
     if (!registeredUser) {
       return res
         .status(404)
@@ -45,7 +43,6 @@ exports.loginController = async (req, res) => {
       req.body.password,
       registeredUser.password
     );
-    console.log(passwordIsValid);
     if (!passwordIsValid) {
       return res.status(400).json({ errMsg: "invalid password!" });
     }

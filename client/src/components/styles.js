@@ -10,7 +10,7 @@ export const styles = {
   },
   submit: {
     padding: "10px 20px",
-    margin: "20px 0",
+    margin: "20px 10px",
     borderRadius: "5px",
     background: "gray",
     color: "white",

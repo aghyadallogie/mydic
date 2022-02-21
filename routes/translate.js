@@ -1,19 +1,25 @@
 const express = require("express");
 const { translateWordToLanguate } = require("../helpers");
-const {UserModel} = require("../models/UserModel");
+const { TranslationModel } = require("../models/TranslationModel");
+const { UserModel } = require("../models/UserModel");
 const router = express.Router();
 
 router.get("/:userid/:word", async (req, res, next) => {
-  const user = await UserModel.findById(req.params.userid).lean();
-  const { word } = req.params;
+  const { word, userid } = req.params;
+  const user = await UserModel.findById(userid).lean();
 
   const wordsPromises = user.languages.map(
     async (lang) => await translateWordToLanguate(word, lang)
   );
 
-  const words = await Promise.all(wordsPromises);
-  console.log(words);
-  res.json(words);
+  const translations = await Promise.all(wordsPromises);
+
+  await TranslationModel.create({
+    user: userid,
+    translations,
+  });
+
+  res.json(translations);
 });
 
 module.exports = router;

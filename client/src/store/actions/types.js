@@ -12,4 +12,6 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const PATCH_REFS = 'PATCH_REFS';
 export const ADD_USER = 'ADD_USER';
-
+export const LOADING = 'LOADING';
+export const TRANSLATE = 'TRANSLATE';
+export const TRANSLATE_FAIL = 'TRANSLATE_FAIL';

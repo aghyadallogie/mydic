@@ -7,7 +7,7 @@ import {
   LOGOUT_SUCCESS,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-  PATCH_REFS,
+
 } from "../actions/types";
 import { helpRegisterUser } from "../helpers/index";
 import { helpLoginUser } from "../helpers/index";
@@ -33,13 +33,6 @@ export const loadUser = () => async (dispatch, getState) => {
 };
 
 export const registerAction = (body) => async (dispatch) => {
-  // const config = {
-  //   headers: {
-  //     "Content-type": "application/json",
-  //   },
-  // };
-  // const body = JSON.stringify(registerData);
-
   try {
     const response = await helpRegisterUser(body);
     dispatch({
@@ -55,13 +48,6 @@ export const registerAction = (body) => async (dispatch) => {
 };
 
 export const loginAction = (loginData) => async (dispatch) => {
-  // const config = {
-  //   headers: {
-  //     "Content-type": "application/json",
-  //   },
-  // };
-  // const body = JSON.stringify(loginData);
-
   try {
     const response = await helpLoginUser(loginData);
     dispatch({
@@ -71,18 +57,16 @@ export const loginAction = (loginData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
-      payload: error.response.data, // not working
+      payload: error.response.data,
     });
   }
 };
 
 export const logoutAction = () => {
-  return { type: LOGOUT_SUCCESS }; // we return instead of dispatch because its logout sync
+  return { type: LOGOUT_SUCCESS };
 };
 
-// setup config/headers and token
 export const tokenConfig = (token) => {
-  // shouldnt we provide token here ? do we even need this ?
   const config = {
     headers: {
       "Content-type": "application/json",
@@ -90,7 +74,7 @@ export const tokenConfig = (token) => {
   };
 
   if (token) {
-    config.headers["auth-token"] = token; // try this on other objs
+    config.headers["auth-token"] = token;
   }
   return config;
 };

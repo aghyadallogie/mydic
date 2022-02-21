@@ -7,6 +7,6 @@ exports.translateWordToLanguate = async (word, lang) => {
 
   return {
     language: lang,
-    word: response.data.translations[0].text,
+    translation: response.data.translations[0].text,
   };
 };
