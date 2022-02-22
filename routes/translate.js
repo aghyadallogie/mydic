@@ -1,11 +1,14 @@
 const express = require("express");
 const { translateWordToLanguate } = require("../helpers");
+const { validateCookie } = require("../middleware/cookieMiddleware");
 const { TranslationModel } = require("../models/TranslationModel");
 const { UserModel } = require("../models/UserModel");
+
 const router = express.Router();
 
-router.get("/:userid/:word", async (req, res, next) => {
+router.get("/:userid/:word", validateCookie, async (req, res, next) => {
   const { word, userid } = req.params;
+  console.log("=>", req.headers);
   const user = await UserModel.findById(userid).lean();
 
   const wordsPromises = user.languages.map(

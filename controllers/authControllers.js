@@ -1,5 +1,6 @@
-const { UserModel } = require("../models/UserModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { UserModel } = require("../models/UserModel");
 
 exports.registerController = async (req, res) => {
   try {
@@ -21,7 +22,10 @@ exports.registerController = async (req, res) => {
       languages: req.body.languages,
     });
 
-    res.status(201).json(newUser);
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "8h",
+    });
+    res.cookie("auth-jwt", token, { httpOnly: true }).status(201).json(newUser);
   } catch (error) {
     // handle error msgs
     res.status(400).json({ errMsg: error.message });
@@ -47,7 +51,16 @@ exports.loginController = async (req, res) => {
       return res.status(400).json({ errMsg: "invalid password!" });
     }
 
-    res.status(200).json(registeredUser);
+    const token = jwt.sign(
+      { userId: registeredUser._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "8h" }
+    );
+
+    res
+      .cookie("auth-jwt", token, { httpOnly: true })
+      .status(200)
+      .json(registeredUser);
   } catch (error) {
     res.status(400).json({ errMsg: error });
   }

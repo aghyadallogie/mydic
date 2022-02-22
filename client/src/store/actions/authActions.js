@@ -1,3 +1,6 @@
+import { helpRegisterUser } from "../helpers/index";
+import { helpLoginUser } from "../helpers/index";
+import { helpFetchMe } from "../helpers/index";
 import {
   USER_LOADING,
   USER_LOADED,
@@ -7,11 +10,7 @@ import {
   LOGOUT_SUCCESS,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-
 } from "../actions/types";
-import { helpRegisterUser } from "../helpers/index";
-import { helpLoginUser } from "../helpers/index";
-import { helpFetchMe } from "../helpers/index";
 
 export const loadUser = () => async (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
@@ -71,10 +70,11 @@ export const tokenConfig = (token) => {
     headers: {
       "Content-type": "application/json",
     },
+    withCredentials: true,
   };
 
   if (token) {
-    config.headers["auth-token"] = token;
+    config.headers["auth-jwt"] = token;
   }
   return config;
 };
