@@ -33,6 +33,8 @@ exports.registerController = async (req, res) => {
 };
 
 exports.loginController = async (req, res) => {
+  console.log("loginController");
+
   try {
     // check if the user exists
     const registeredUser = await UserModel.findOne({ email: req.body.email });
@@ -57,8 +59,9 @@ exports.loginController = async (req, res) => {
       { expiresIn: "8h" }
     );
 
+    console.log(token);
     res
-      .cookie("auth-jwt", token, { httpOnly: true })
+      .cookie("token_cookie", token, { httpOnly: true, sameSite: "lax"})
       .status(200)
       .json(registeredUser);
   } catch (error) {

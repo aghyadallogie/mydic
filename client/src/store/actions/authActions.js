@@ -48,7 +48,7 @@ export const registerAction = (body) => async (dispatch) => {
 
 export const loginAction = (loginData) => async (dispatch) => {
   try {
-    const response = await helpLoginUser(loginData);
+    const response = await helpLoginUser(loginData, tokenConfig());
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,

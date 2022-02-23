@@ -2,11 +2,9 @@ const createError = require("http-errors");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const path = require("path");
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
-dotenv.config();
+require("dotenv").config();
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
@@ -24,6 +22,7 @@ app.use(
     method: ["GET", "POST"],
   })
 );
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
