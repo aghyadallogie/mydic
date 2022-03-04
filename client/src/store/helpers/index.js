@@ -9,5 +9,12 @@ export const helpRegisterUser = async (body, config) =>
 export const helpLoginUser = async (body, config) =>
   await axios.post("http://localhost:4000/auth/login", body, config);
 
+export const helpLogoutUser = async () =>
+  await axios.get("http://localhost:4000/auth/logout", {
+    withCredentials: true,
+  });
+
 export const helpTranslate = async (userId, word) =>
-  await axios.get(`http://localhost:4000/translate/${userId}/${word}`);
+  await axios.get(`http://localhost:4000/translate/${userId}/${word}`, {
+    withCredentials: true,
+  });

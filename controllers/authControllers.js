@@ -33,8 +33,6 @@ exports.registerController = async (req, res) => {
 };
 
 exports.loginController = async (req, res) => {
-  console.log("loginController");
-
   try {
     // check if the user exists
     const registeredUser = await UserModel.findOne({ email: req.body.email });
@@ -59,12 +57,18 @@ exports.loginController = async (req, res) => {
       { expiresIn: "8h" }
     );
 
-    console.log(token);
     res
-      .cookie("token_cookie", token, { httpOnly: true, sameSite: "lax"})
+      .cookie("token_cookie", token, { httpOnly: true, sameSite: "lax" })
       .status(200)
       .json(registeredUser);
   } catch (error) {
     res.status(400).json({ errMsg: error });
   }
+};
+
+exports.logoutController = async (req, res) => {
+  res
+    .status(200)
+    .clearCookie("token_cookie")
+    .json({ msg: "user logged out successfully!" });
 };

@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get("/:userid/:word", validateCookie, async (req, res, next) => {
   const { word, userid } = req.params;
-  console.log("=>", req.headers);
   const user = await UserModel.findById(userid).lean();
+  console.log('->', req.verifiedUser);
 
   const wordsPromises = user.languages.map(
     async (lang) => await translateWordToLanguate(word, lang)

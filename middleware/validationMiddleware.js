@@ -1,9 +1,7 @@
 const isEmail = require("validator/lib/isEmail");
 
-// a middleware is just a fancy name for a function that runs before the controller
 exports.validateCredentials = (req, res, next) => {
   const { name, email, password, languages } = req.body;
-  console.log("validateCredentials");
   // check name
   if (name?.length < 6)
     return res

@@ -1,5 +1,4 @@
-import { helpRegisterUser } from "../helpers/index";
-import { helpLoginUser } from "../helpers/index";
+import { helpRegisterUser, helpLoginUser, helpLogoutUser } from "../helpers/index";
 import { helpFetchMe } from "../helpers/index";
 import {
   USER_LOADING,
@@ -33,7 +32,7 @@ export const loadUser = () => async (dispatch, getState) => {
 
 export const registerAction = (body) => async (dispatch) => {
   try {
-    const response = await helpRegisterUser(body);
+    const response = await helpRegisterUser(body, tokenConfig());
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
@@ -61,8 +60,9 @@ export const loginAction = (loginData) => async (dispatch) => {
   }
 };
 
-export const logoutAction = () => {
-  return { type: LOGOUT_SUCCESS };
+export const logoutAction = () => async dispatch => {
+  const response = await helpLogoutUser();
+  dispatch( { type: LOGOUT_SUCCESS});
 };
 
 export const tokenConfig = (token) => {

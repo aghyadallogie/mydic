@@ -18,6 +18,7 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: false,
         translations: action.payload,
+        errMsg: '',
       };
     case TRANSLATE_FAIL:
       return {
